@@ -21,7 +21,7 @@ const AdminSidebar = () => {
             </div>            
 
             <div className='list-group list-group-flush'>
-                <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                <Link to='/admin-dashboard' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                     <FaThLarge className='me-2 ' />Dashboard</Link>
                 
                 <div className='list-group list-group-flush'>
@@ -34,15 +34,14 @@ const AdminSidebar = () => {
             </button>
                 {openMenus.category && (
                     <div className='ps-4'>
-                <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                <Link to='/add-category' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                     Add Category</Link>
                 
                 <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
                     Manage Category</Link>
             </div>
                 )}
-            
-
+                
             <button onClick={() => toggleMenu('food')} className='list-group-item list-group-item-action bg-dark text-white border-0'>
                 <FaEdit className='me-2 '/>Food Menu {openMenus.food ? <FaChevronUp/> : <FaChevronDown/>}
             </button>
