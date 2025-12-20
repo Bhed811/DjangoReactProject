@@ -15,3 +15,8 @@
     background-color: #1a1a1a !important;
     color: yellow !important;
 }
+
+#page-content-wrapper{
+    width: calc(100% - 250px);
+    margin-left: 250px;
+}

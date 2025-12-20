@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import '../styles/admin.css'
 import { Link } from 'react-router-dom'
 import {FaCopy, FaEdit, FaSearch, FaThLarge, FaUserCheck, FaUserEdit, FaUsers} from 'react-icons/fa'
 const AdminSidebar = () => {

@@ -1,9 +1,16 @@
 import React from 'react'
 import AdminSidebar from '../components/AdminSidebar';
+import AdminLayout from '../components/AdminLayout';
 
 const AdminDashboard = () => {
     return (
-        <AdminSidebar/>
+        <AdminLayout>
+            <div>
+                <h2 className='text-center text-primary'>
+                    Admin Dashboard
+                </h2>
+            </div>
+        </AdminLayout>
     )
 }
 
