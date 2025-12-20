@@ -22,7 +22,7 @@ const AddCategory = () => {
                 setCategoryName('');
             }
             else {
-                toast.error(data.message);
+                toast.error("Something went wrong");
             }
         } catch (error) {
             console.error(error);
