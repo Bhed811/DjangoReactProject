@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import AdminLayout from '../components/AdminLayout'
 import { Link } from 'react-router-dom'
 
 const ManageCategory = () => { 
+  
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    fetch ('http://127.0.0.1:8000/api/categories/')
+      .then(response => response.json())
+      .then(data => setCategories(data))
+      .catch(error => console.error(error));
+  }, []); 
+
   return (
     <AdminLayout>
       <div>
@@ -12,7 +21,7 @@ const ManageCategory = () => {
         
         <h5 className='text-end text-muted'>
           <i className='fas fa-database '></i> Total Categories
-          <span className='ms-2 badge bg-success'> 10</span>
+          <span className='ms-2 badge bg-success'> {categories.length}</span>
         </h5>
         <div className='mb-3'>
           <input type='text' className='form-control w-50 ' placeholder='Search Category' />
@@ -27,10 +36,12 @@ const ManageCategory = () => {
             </tr>
           </thead>
           <tbody>
+            {categories.map((category, index) => (
+
             <tr>
-              <td className='text-center'>1</td>
-              <td className='text-center'>catA</td>
-              <td className='text-center'>Date1</td>
+              <td className='text-center'>{index + 1}</td>
+              <td className='text-center'>{category.category_name}</td>
+              <td className='text-center'>{new Date(category.creation_date).toLocaleString()}</td>
               <td className='text-center' >
                 <Link className='btn btn-sm btn-primary'>
                   <i className='fas fa-edit me-1'></i> Edit
@@ -40,19 +51,8 @@ const ManageCategory = () => {
                 </button>
               </td>
             </tr>
-            <tr>
-              <td className='text-center'>2</td>
-              <td className='text-center'>catB</td>
-              <td className='text-center'>Date2</td>
-              <td className='text-center' >
-                <Link className='btn btn-sm btn-primary'>
-                  <i className='fas fa-edit me-1'></i> Edit
-                </Link>
-                <button className='btn btn-sm btn-danger ms-2 '>
-                  <i className='fas fa-trash me-1'></i> Delete
-                </button>
-              </td>
-            </tr>
+            ))}
+            
           </tbody>
         </table>
       </div>
