@@ -55,7 +55,7 @@ const ManageCategory = () => {
           <tbody>
             {categories.map((category, index) => (
 
-            <tr>
+            <tr key={category.id}>
               <td className='text-center'>{index + 1}</td>
               <td className='text-center'>{category.category_name}</td>
               <td className='text-center'>{new Date(category.creation_date).toLocaleString()}</td>

@@ -47,7 +47,7 @@ const AdminSidebar = () => {
             </button>
                 {openMenus.food && (
                     <div className='ps-4'>
-                <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                <Link to='/add-food' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                     Add Food Item</Link>
                 
                 <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>

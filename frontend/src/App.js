@@ -4,6 +4,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AddCategory from './pages/AddCategory';
 import ManageCategory from './pages/ManageCategory';
+import AddFood from './pages/AddFood';
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
         <Route path="/add-category" element={<AddCategory/>}></Route>
         <Route path="/manage-category" element={<ManageCategory/>}></Route>
+        <Route path="/add-food" element={<AddFood/>}></Route>
       </Routes>
     </BrowserRouter>
   );
