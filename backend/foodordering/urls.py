@@ -4,4 +4,5 @@ urlpatterns = [
     path('admin-login/', admin_login_api),
     path('add-category/', add_category_api),
     path('categories/', list_categories),
+    path('add-food-item/', add_food_item_api),
 ]

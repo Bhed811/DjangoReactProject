@@ -40,19 +40,32 @@ const AddFood = () => {
     }
 
   const handleSubmit = async (e) => {
-          e.preventDefault();
+      e.preventDefault();
+      const data = new FormData();
+      data.append('category', formData.category);
+      data.append('item_name', formData.item_name);
+      data.append('item_price', formData.item_price);
+      data.append('item_description', formData.item_description);
+      data.append('image', formData.image);
+      data.append('item_quantity', formData.item_quantity);
           try {
-              const response = await fetch('http://127.0.0.1:8000/api/add-food/', {
+              const response = await fetch('http://127.0.0.1:8000/api/add-food-item/', {
                   method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({  })
+                  body: data
               })
       
-              const data = await response.json();
+              const result = await response.json();
       
               if (response.status === 201) {
-                  toast.success(data.message);
-                //   setCategoryName('');
+                  toast.success(result.message);
+                  setFormData({
+                      category: '',
+                      item_name: '',
+                      item_price: '',
+                      item_description: '',
+                      image: null,
+                      item_quantity: '',
+                  });
               }
               else {
                   toast.error("Something went wrong");
