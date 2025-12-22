@@ -14,7 +14,7 @@ const PublicLayout = ({children}) => {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav ms-auto">
         <li className="nav-item ms-1">
-          <Link className="nav-link " aria-current="page" to="#"><FaHome className='me-1 '/>Home</Link>
+          <Link className="nav-link " aria-current="page" to="/"><FaHome className='me-1 '/>Home</Link>
         </li>
         <li className="nav-item mx-1">
           <Link className="nav-link" to="#"><FaUtensils className='me-1 '/>Menu</Link>
@@ -29,7 +29,7 @@ const PublicLayout = ({children}) => {
           <Link className="nav-link" to="#"><FaSignInAlt className='me-1 '/>Login</Link>
         </li>
         <li className="nav-item mx-1">
-          <Link className="nav-link" to="#"><FaUserShield className='me-1 '/>Admin</Link>
+          <Link className="nav-link" to="/admin-login"><FaUserShield className='me-1 '/>Admin</Link>
         </li>
       </ul>
       
@@ -37,7 +37,7 @@ const PublicLayout = ({children}) => {
   </div>
           </nav>
           
-         <div>{children}</div>
+         <div className='text-primary'>{children}</div>
 
       <footer className='text-center py-3 mt-5'>
         <div className='container '>
