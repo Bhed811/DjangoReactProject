@@ -6,4 +6,5 @@ urlpatterns = [
     path('categories/', list_categories),
     path('add-food-item/', add_food_item_api),
     path('foods/', list_foods),
+    path('food_search/', food_search),
 ]
