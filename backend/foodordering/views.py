@@ -54,3 +54,12 @@ def food_search(request):
     foods=Food.objects.filter(item_name__icontains=query)
     serializer=FoodSerializer(foods, many=True)
     return Response(serializer.data, status=200)
+
+import random
+@api_view(['GET'])
+def random_foods_api(request):    
+    foods = list(Food.objects.all())  
+    random.shuffle(foods)
+    limited_foods=foods[0:9]
+    serializer=FoodSerializer(limited_foods, many=True)
+    return Response(serializer.data, status=200)
