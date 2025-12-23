@@ -8,5 +8,6 @@ urlpatterns = [
     path('foods/', list_foods),
     path('food_search/', food_search),
     path('random_foods/', random_foods_api),
-    path('register-user/', register_user),
+    path('register/', register_user),
+    path('login/', login_user),
 ]

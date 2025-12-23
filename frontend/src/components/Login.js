@@ -42,7 +42,7 @@ const Login = () => {
                     localStorage.setItem('userId', result.userId);
                     localStorage.setItem('userName', result.userName);
                     setTimeout(() => {
-                        window.location.href = '/user-dashboard';
+                        navigate('/');
                     }, 2000);
                 }
                 else {

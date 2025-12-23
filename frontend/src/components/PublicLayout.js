@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { FaHome, FaSignInAlt, FaTruck, FaUserPlus, FaUserShield, FaUtensils } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../styles/layout.css';
-const PublicLayout = ({children}) => {
+const PublicLayout = ({ children }) => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
+
+  const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+  const name = localStorage.getItem('userName');
+  
+  useEffect(() => {
+    if (userId) {
+      setIsLoggedIn(true);
+      setUserName(name);
+    } else {
+      setIsLoggedIn(false);
+      setUserName('');
+    }
+  }, [userId]); 
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,6 +48,9 @@ const PublicLayout = ({children}) => {
         </li>
         <li className="nav-item mx-1">
           <Link className="nav-link" to="/admin-login"><FaUserShield className='me-1 '/>Admin</Link>
+        </li>
+        <li className="nav-item mx-1">
+          <Link className="nav-link" to="/admin-login"><FaUserShield className='me-1 '/>{userName}</Link>
         </li>
       </ul>
       

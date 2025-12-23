@@ -76,3 +76,20 @@ def register_user(request):
         return Response({"message": "User already exists"}, status=400)
     User.objects.create(first_name=first_name, last_name=last_name, email=email, password= make_password(password) , mobile=mobile)
     return Response({"message": "User registered successfully"}, status=201)
+
+from django.contrib.auth.hashers import check_password
+from django.db.models import Q
+@api_view(['POST'])
+def login_user(request):
+    identifier=request.data.get('emailcont')
+    password=request.data.get('password')
+
+    try:
+        user = User.objects.get(Q(email=identifier) | Q(mobile=identifier))
+    except User.DoesNotExist:
+        return Response({"message": "User not found"}, status=404)
+
+    if check_password(password, user.password):
+        return Response({"message": "Login successful", "userId":user.id, "userName":f"{user.first_name} {user.last_name}"}, status=200)
+    return Response({"message": "Invalid credentials"}, status=401)
+    
