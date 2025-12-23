@@ -23,7 +23,7 @@ const PublicLayout = ({children}) => {
           <Link className="nav-link" to="#"><FaTruck className='me-1 '/>Track</Link>
         </li>
         <li className="nav-item mx-1">
-          <Link className="nav-link" to="#"><FaUserPlus className='me-1 '/>Register</Link>
+          <Link className="nav-link" to="/register"><FaUserPlus className='me-1 '/>Register</Link>
         </li>
         <li className="nav-item mx-1">
           <Link className="nav-link" to="#"><FaSignInAlt className='me-1 '/>Login</Link>
