@@ -47,6 +47,9 @@ const Register = () => {
                     password: '',
                     repeatpassword: '',
                 });
+                setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
             }
             else {
                 toast.error(result.message || "Something went wrong");
@@ -91,7 +94,7 @@ const Register = () => {
                     <div className='col-md-6 d-flex align-items-center justify-content-center'>
                         <div className='p-4 text-center'>
                             <img src="/images/registration.png" className='img-fluid' style={{ maxHeight: "400px" }} />
-                            <h5 className='mt-2'> Registartion is fast, secure and free.</h5>
+                            <h5 className='mt-2'> Registration is fast, secure and free.</h5>
                             <p className='tet-muted small'>Join our food family and enjou delicious food delivered to your door.</p>
                         </div>
                     </div>
