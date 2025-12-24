@@ -92,4 +92,14 @@ def login_user(request):
     if check_password(password, user.password):
         return Response({"message": "Login successful", "userId":user.id, "userName":f"{user.first_name} {user.last_name}"}, status=200)
     return Response({"message": "Invalid credentials"}, status=401)
+
+
+from django.shortcuts import get_object_or_404
+@api_view(['GET'])
+def food_detail(request,id):    
+    # food=  Food.objects.get(id=request.GET.get('id'));  
+    food= get_object_or_404(Food, id=id)
     
+    serializer=FoodSerializer(food)
+    return Response(serializer.data, status=200)
+ 
