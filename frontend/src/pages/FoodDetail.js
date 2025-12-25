@@ -41,6 +41,9 @@ const FoodDetail = () => {
 
             if (response.status === 200) {
                 toast.success(result.message || "Item Added to Cart");
+                setTimeout(() => {
+                    navigate('/cart');
+                }, 2000)
 
             }
             else {
