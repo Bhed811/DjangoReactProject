@@ -96,10 +96,35 @@ def login_user(request):
 
 from django.shortcuts import get_object_or_404
 @api_view(['GET'])
-def food_detail(request,id):    
+def food_detail(request,id  ):    
     # food=  Food.objects.get(id=request.GET.get('id'));  
     food= get_object_or_404(Food, id=id)
     
     serializer=FoodSerializer(food)
     return Response(serializer.data, status=200)
  
+@api_view(['POST'])
+def add_to_cart(request):
+    user_id=request.data.get('userId')
+    food_id=request.data.get('foodId')
+
+    try:
+        user = User.objects.get(id=user_id)
+        food = Food.objects.get(id=food_id)
+
+        order,created=Order.objects.get_or_create(
+            user=user,
+            food=food,
+            is_order_placed=False,
+            # quantity=1
+            defaults={'quantity':1}
+        )
+
+        if not created:
+            order.quantity += 1
+            order.save()
+
+        return Response({"message": "Added to cart succesfully"}, status=200)
+    except:
+        return Response({"message": "Something went wrong"}, status=404)
+   
