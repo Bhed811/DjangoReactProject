@@ -1,7 +1,7 @@
 import React, { useState, useEffect, use } from 'react'
 import PublicLayout from '../components/PublicLayout'
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { FaMinus, FaPlus, FaShoppingCart, FaTrash } from 'react-icons/fa';
 
 const Cart = () => {
@@ -29,7 +29,67 @@ const Cart = () => {
 
     }, [userId]);
 
+    const updateQuantity = async (orderId, newQty) => {
+        if (newQty < 1) return;
 
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/cart/update_quantity/', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    orderId: orderId,
+                    quantity: newQty
+                })
+            })
+
+            if (response.status === 200) {
+                const updated = await fetch(`http://127.0.0.1:8000/api/cart/${userId}`)
+                const data = await updated.json();
+                setCartItems(data);
+                const total = data.reduce((sum, item) => sum + item.food.item_price * item.quantity, 0);
+                setGrandTotal(total);
+
+            }
+            else {
+                toast.error("Something went wrong");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Error Connecting to server');
+        }
+
+    }
+
+    const deleteCartItem = async (orderId) => {
+
+        const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+        if (!confirmDelete) return;
+
+        // if (newQty < 1) return;
+
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/cart/delete/${orderId}/`, {
+                method: 'DELETE',
+
+            })
+
+            if (response.status === 200) {
+                const updated = await fetch(`http://127.0.0.1:8000/api/cart/${userId}`)
+                const data = await updated.json();
+                setCartItems(data);
+                const total = data.reduce((sum, item) => sum + item.food.item_price * item.quantity, 0);
+                setGrandTotal(total);
+
+            }
+            else {
+                toast.error("Something went wrong");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Error Connecting to server');
+        }
+
+    }
 
 
     return (
@@ -44,40 +104,51 @@ const Cart = () => {
                 ) : (
                     <>
                         <div className='row'>
-                            {cartItems.map((item, index) => (
-                                <div className='col-md-6 mb-4'>
-                                    <div className='card shadow-sm'>
-                                        <div className='row'>
-                                            <div className='col-md-4'>
-                                                <img src={`http://127.0.0.1:8000${item.food.image}`} className='img-fluid rounded-start' style={{ width: '100%', maxHeight: '300px' }} />
-                                            </div>
-                                            <div className='col-md-8'>
-                                                <div className='card-body'>
-                                                    <h5 className='card-title'>
-                                                        {item.food.item_name}
-                                                    </h5>
-                                                    <p className='card-text text-muted small'>{item.food.item_description}</p>
-                                                    <p className='fw-bold text-success'>Rs. {item.food.item_price}</p>
-                                                    <div className='d-flex align-items-center mb-2'>
-                                                        <button className='btn btn-sm btn-outline-secondary me-2' disabled={item.quantity <= 1} >
-                                                            <FaMinus />
+                            {cartItems
+                                .map((item, index) => (
+                                    <div className='col-md-6 mb-4'>
+                                        <div className='card shadow-sm'>
+                                            <div className='row'>
+                                                <div className='col-md-4'>
+                                                    <img src={`http://127.0.0.1:8000${item.food.image}`} className='img-fluid rounded-start mt-5 ms-3 rounded' style={{ maxHeight: '300px' }} />
+                                                </div>
+                                                <div className='col-md-8'>
+                                                    <div className='card-body'>
+                                                        <h5 className='card-title'>
+                                                            {item.food.item_name}
+                                                        </h5>
+                                                        <p className='card-text text-muted small'>{item.food.item_description}</p>
+                                                        <p className='fw-bold text-success'>Rs. {item.food.item_price}</p>
+                                                        <div className='d-flex align-items-center mb-2' >
+                                                            <button className='btn btn-sm btn-outline-secondary me-2' disabled={item.quantity <= 1} onClick={() => updateQuantity(item.id, item.quantity - 1)} >
+                                                                <FaMinus />
+                                                            </button>
+                                                            <span className='fw-bold px-2'>{item.quantity}</span>
+                                                            <button className='btn btn-sm btn-outline-secondary ms-2' onClick={() => updateQuantity(item.id, item.quantity + 1)} >
+                                                                <FaPlus />
+                                                            </button>
+                                                        </div>
+                                                        <button className='btn btn-sm btn-outline-danger  px-3' onClick={() => deleteCartItem(item.id)}  >
+                                                            <FaTrash className='me-2 icon-fix' /> Remove
                                                         </button>
-                                                        <span className='fw-bold px-2'>{item.quantity}</span>
-                                                        <button className='btn btn-sm btn-outline-secondary ms-2'  >
-                                                            <FaPlus />
-                                                        </button>
-                                                    </div>
-                                                    <button className='btn btn-sm btn-outline-danger  px-3'  >
-                                                        <FaTrash className='me-2 icon-fix' /> Remove
-                                                    </button>
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                            ))}
+                                    </div>
+                                ))}
+                        </div>
+                        <div className='card p-4 mt-4 shadow-sm border-0'>
+                            <h4 className='text-end'>
+                                Total: Rs. {grandTotal.toFixed(2)}
+                            </h4>
+                            <div className='text-end'>
+                                <button className='btn btn-primary mt-3 px-4'>
+                                    <FaShoppingCart className='me-1 mb-1' /> Proceed to Payment
+                                </button>
+                            </div>
                         </div>
                     </>
                 )}

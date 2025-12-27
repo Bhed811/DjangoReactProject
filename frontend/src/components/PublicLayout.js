@@ -63,7 +63,7 @@ const PublicLayout = ({ children }) => {
                   <Link className="nav-link" to=""><FaUser className='me-1 ' />My Orders</Link>
                 </li>
                 <li className="nav-item mx-1">
-                  <Link className="nav-link" to=""><FaShoppingCart className='me-1 ' />Cart</Link>
+                  <Link className="nav-link" to="/cart"><FaShoppingCart className='me-1 ' />Cart</Link>
                 </li>
                 <li className="nav-item mx-1">
                   <Link className="nav-link" to=""><FaHeart className='me-1 ' />Wishlist</Link>
