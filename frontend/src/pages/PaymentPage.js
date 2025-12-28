@@ -25,38 +25,46 @@ const PaymentPage = () => {
                 toast.error('Please enter card details');
                 return;
             }
-
-            try {
-                const response = await fetch('http://127.0.0.1:8000/api/place_order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        userId: userId,
-                        address: address,
-                        paymentMode: paymentMode,
-                        cardNumber: paymentMode === 'online' ? cardDetails.cardNumber : '',
-                        expiryDate: paymentMode === 'online' ? cardDetails.expiryDate : '',
-                        cvv: paymentMode === 'online' ? cardDetails.cvv : ''
-                    })
-                })
-
-                const result = await response.json();
-
-                if (response.status === 200) {
-                    toast.success(result.message);
-                    setTimeout(() => {
-                        navigate('/my-orders');
-                    }, 2000)
-
-                }
-                else {
-                    toast.error(result.message || "Something went wrong");
-                }
-            } catch (error) {
-                console.error(error);
-                toast.error('Error Connecting to server');
-            }
         }
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/place_order/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: userId,
+                    address: address,
+                    paymentMode: paymentMode,
+                    cardNumber: paymentMode === 'online' ? cardDetails.cardNumber : '',
+                    expiryDate: paymentMode === 'online' ? cardDetails.expiryDate : '',
+                    cvv: paymentMode === 'online' ? cardDetails.cvv : ''
+                })
+            })
+
+            const result = await response.json();
+
+            if (response.status === 201) {
+                toast.success(result.message);
+                setAddress('');
+                setPaymentMode('');
+                setCardDetails({
+                    cardNumber: '',
+                    expiryDate: '',
+                    cvv: ''
+                })
+                setTimeout(() => {
+                    navigate('/my-orders');
+                }, 2000)
+
+            }
+            else {
+                toast.error(result.message || "Something went wrong");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Error Connecting to server');
+        }
+
     }
 
 
@@ -119,7 +127,7 @@ const PaymentPage = () => {
                             </div>
                         </div>
                     )}
-                    <button className='btn btn-primary mt-4 w-100'>
+                    <button className='btn btn-primary mt-4 w-100' onClick={handlePlaceOrder}>
                         <i className='fas fa-check-circle me-2'></i>
                         Confrim and Place Order
                     </button>
