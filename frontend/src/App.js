@@ -12,6 +12,8 @@ import Login from './components/Login';
 import FoodDetail from './pages/FoodDetail';
 import Cart from './pages/Cart';
 import PaymentPage from './pages/PaymentPage';
+import MyOrder from './pages/MyOrders';
+import MyOrders from './pages/MyOrders';
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +31,7 @@ function App() {
         <Route path="/food/:id" element={<FoodDetail />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/payment" element={<PaymentPage />}></Route>
+        <Route path="/my-orders" element={<MyOrders />}></Route>
       </Routes>
     </BrowserRouter>
   );

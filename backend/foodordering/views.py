@@ -193,3 +193,10 @@ def place_order(request):
         return Response({"message": f"Order placed successfully! Order No: {order_number}"}, status=201)
     except:
         return Response({"message": "Something went wrong"}, status=404)
+    
+from .serializers import MyOrdersListSerializer
+@api_view(['GET'])
+def user_orders(request,user_id):
+    orders = OrderAddress.objects.filter(user_id=user_id).order_by('-id')
+    serializer=MyOrdersListSerializer(orders, many=True)
+    return Response(serializer.data, status=200)
