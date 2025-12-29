@@ -200,3 +200,9 @@ def user_orders(request,user_id):
     orders = OrderAddress.objects.filter(user_id=user_id).order_by('-id')
     serializer=MyOrdersListSerializer(orders, many=True)
     return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def order_by_order_number(request,order_number):
+    orders = Order.objects.filter(order_number=order_number, is_order_placed=True).select_related('food')
+    serializer=CartOrderSerializer(orders, many=True)
+    return Response(serializer.data, status=200)

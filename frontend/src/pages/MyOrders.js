@@ -54,7 +54,7 @@ const MyOrders = () => {
                   <Link className='btn btn-outline-primary btn-sm  me-2'>
                     <FaMapMarkedAlt className='me-1 mb-1' />Track
                   </Link>
-                  <Link className='btn btn-outline-secondary btn-sm  me-2'>
+                  <Link className='btn btn-outline-secondary btn-sm  me-2' to={`/order-details/${order.order_number}`}>
                     <FaInfoCircle className='me-1 mb-1' />View Details
                   </Link>
                 </div>

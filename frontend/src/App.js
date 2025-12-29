@@ -14,6 +14,7 @@ import Cart from './pages/Cart';
 import PaymentPage from './pages/PaymentPage';
 import MyOrder from './pages/MyOrders';
 import MyOrders from './pages/MyOrders';
+import OrderDetails from './pages/OrderDetails';
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +33,7 @@ function App() {
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/payment" element={<PaymentPage />}></Route>
         <Route path="/my-orders" element={<MyOrders />}></Route>
+        <Route path="/order-details/:order_number" element={<OrderDetails />}></Route>
       </Routes>
     </BrowserRouter>
   );
