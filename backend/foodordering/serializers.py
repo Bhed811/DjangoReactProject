@@ -35,7 +35,21 @@ class MyOrdersListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=OrderAddress
-        fields=['order_number','order_time', 'order_final_status']
+        fields=['order_number','order_time', 'order_final_status' ]
 
     def get_order_final_status(self, obj):
         return obj.order_final_status or 'Waiting for confirmation from the restaurant'
+    
+class OrderAddressSerializer(serializers.ModelSerializer):
+    payment_mode=serializers.SerializerMethodField()
+
+    class Meta:
+        model=OrderAddress
+        fields=['order_number','order_time', 'order_final_status', 'address', 'payment_mode' ]
+
+    def get_payment_mode(self, obj):
+        try:
+            payment= PaymentDetail.objects.get(order_number=obj.order_number)
+            return payment.payment_mode
+        except PaymentDetail.DoesNotExist:
+            return None

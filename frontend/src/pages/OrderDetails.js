@@ -26,6 +26,13 @@ const OrderDetails = () => {
             })
             .catch(error => console.error(error));
 
+        fetch(`http://127.0.0.1:8000/api/order_address/${order_number}/`)
+            .then(response => response.json())
+            .then(data => {
+                setOrderAddress(data);
+            })
+            .catch(error => console.error(error));
+
     }, [order_number]);
 
     return (
@@ -51,7 +58,26 @@ const OrderDetails = () => {
 
                     </div>
                     <div className='col-md-4'>
+                        {orderAddress &&
+                            <div className='card p-4 shadow-sm border-0 bg-light'>
+                                <h5 className='fw-semibold mb-3'>
+                                    <i className='fas fa-map-marker-alt me-2 text-danger'></i>
+                                    Delivery Details:
+                                </h5>
+                                <p><strong>Date: </strong>{new Date(orderAddress.order_time).toLocaleString()}</p>
+                                <p><strong>Address: </strong>{orderAddress.address}</p>
+                                <p><strong>Status: </strong>{orderAddress.order_final_status || "Waiting for restaurant confirmation"}</p>
+                                <p><strong>Payment Mode: </strong>{orderAddress.payment_mode}</p>
+                                <p><strong>Total: </strong>Rs. {total}</p>
 
+                                <a href="" target='_blank' className='btn btn-primary w-100 my-2'>
+                                    <i className='fas fa-file-invoice me-2'></i> Invoice
+                                </a>
+                                <a href="" target='_blank' className='btn btn-danger w-100 my-2'>
+                                    <i className='fas fa-cancel me-2'></i> Cancel Order
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

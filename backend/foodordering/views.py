@@ -206,3 +206,10 @@ def order_by_order_number(request,order_number):
     orders = Order.objects.filter(order_number=order_number, is_order_placed=True).select_related('food')
     serializer=CartOrderSerializer(orders, many=True)
     return Response(serializer.data, status=200)
+
+from .serializers import OrderAddressSerializer
+@api_view(['GET'])
+def get_order_address(request,order_number):
+    address = OrderAddress.objects.get(order_number=order_number)
+    serializer=OrderAddressSerializer(address)
+    return Response(serializer.data, status=200)
