@@ -16,6 +16,7 @@ import MyOrder from './pages/MyOrders';
 import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
 import ProfilePage from './pages/ProfilePage';
+import ChangePassword from './pages/ChangePassword';
 function App() {
   return (
     <BrowserRouter>
@@ -36,6 +37,7 @@ function App() {
         <Route path="/my-orders" element={<MyOrders />}></Route>
         <Route path="/order-details/:order_number" element={<OrderDetails />}></Route>
         <Route path="/profile" element={<ProfilePage />}></Route>
+        <Route path="/changepassword" element={<ChangePassword />}></Route>
       </Routes>
     </BrowserRouter>
   );
