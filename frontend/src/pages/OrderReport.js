@@ -69,7 +69,7 @@ const OrderReport = () => {
                             <label>Status</label>
                             <select name='status' value={formData.status} onChange={handleChange} className='form-control' required >
                                 <option value='all'>All</option>
-                                <option value=''>Not Confirmed</option>
+                                <option value='not_confirmed'>Not Confirmed</option>
                                 <option value='Order Confirmed'>Confirmed</option>
                                 <option value='Food being Prepared'>Food Being Prepared</option>
                                 <option value='Food Pickup'>Food Pickup</option>
@@ -79,6 +79,9 @@ const OrderReport = () => {
                             </select>
                         </div>
                     </div>
+                    <div className='text-center mt-2 '>
+                        <button className='btn btn-primary' type='submit'>Submit</button>
+                    </div>
                 </form>
 
                 <h5 className='text-end text-muted'>
@@ -86,32 +89,36 @@ const OrderReport = () => {
                     <span className='ms-2 badge bg-success'> {orders.length}</span>
                 </h5>
 
-                <table className='table table-bordered table-hover'>
-                    <thead className='table-dark'>
-                        <tr>
-                            <th className='text-center'>S. No.</th>
-                            <th className='text-center'>Order no.</th>
-                            <th className='text-center'>Order Time</th>
-                            <th className='text-center'>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {orders.map((order, index) => (
-
-                            <tr key={order.id}>
-                                <td className='text-center'>{index + 1}</td>
-                                <td className='text-center'>{order.order_number}</td>
-                                <td className='text-center'>{new Date(order.order_time).toLocaleString()}</td>
-                                <td className='text-center' >
-                                    <a href={`/admin-view-order-detail/${order.order_number}`} className='btn btn-sm btn-primary'>
-                                        <i className='fas fa-edit me-1'></i> View Order Details
-                                    </a>
-                                </td>
+                {orders.length > 0 && (
+                    <table className='table table-bordered table-hover'>
+                        <thead className='table-dark'>
+                            <tr>
+                                <th className='text-center'>S. No.</th>
+                                <th className='text-center'>Order no.</th>
+                                <th className='text-center'>Order Time</th>
+                                <th className='text-center'>Action</th>
                             </tr>
-                        ))}
+                        </thead>
+                        <tbody>
+                            {orders.map((order, index) => (
 
-                    </tbody>
-                </table>
+                                <tr key={order.id}>
+                                    <td className='text-center'>{index + 1}</td>
+                                    <td className='text-center'>{order.order_number}</td>
+                                    <td className='text-center'>{new Date(order.order_time).toLocaleString()}</td>
+                                    <td className='text-center' >
+                                        <a href={`/admin-view-order-detail/${order.order_number}`} className='btn btn-sm btn-primary'>
+                                            <i className='fas fa-edit me-1'></i> View Order Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            ))}
+
+                        </tbody>
+                    </table>
+                )}
+
+
             </div>
         </AdminLayout>
     )
