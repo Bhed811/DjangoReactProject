@@ -265,3 +265,45 @@ def change_password(request,user_id):
 
     return Response( {"message": "Password changed successfully"} , status=200)
   
+from .serializers import OrderSummarySerializer
+@api_view(['GET'])
+def orders_not_confirmed(request):
+    orders =OrderAddress.objects.filter(order_final_status__isnull=True).order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def orders_confirmed(request):
+    orders =OrderAddress.objects.filter(order_final_status='Order Confirmed').order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def food_being_prepared(request):
+    orders =OrderAddress.objects.filter(order_final_status='Food Pickup').order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def food_pickup(request):
+    orders =OrderAddress.objects.filter(order_final_status='Food being Prepared').order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def food_delivered(request):
+    orders =OrderAddress.objects.filter(order_final_status='Food Delivered').order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def order_cancelled(request):
+    orders =OrderAddress.objects.filter(order_final_status='Order Cancelled').order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def all_orders(request):
+    orders =OrderAddress.objects.all().order_by('-order_time')
+    serializer=OrderSummarySerializer(orders, many=True)
+    return Response(serializer.data, status=200)

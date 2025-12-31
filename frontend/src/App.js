@@ -17,6 +17,7 @@ import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
 import ProfilePage from './pages/ProfilePage';
 import ChangePassword from './pages/ChangePassword';
+import OrdersNotConfirmed from './pages/OrdersNotConfirmed';
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +29,8 @@ function App() {
         <Route path="/manage-category" element={<ManageCategory />}></Route>
         <Route path="/add-food" element={<AddFood />}></Route>
         <Route path="/manage-food" element={<ManageFood />}></Route>
+        <Route path="/order-not-confirmed" element={<OrdersNotConfirmed />}></Route>
+
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
