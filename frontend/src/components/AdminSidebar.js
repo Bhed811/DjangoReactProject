@@ -61,31 +61,31 @@ const AdminSidebar = () => {
                 </button>
                 {openMenus.order && (
                     <div className='ps-4'>
-                        <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/orders-confirmed' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             Confirmed</Link>
 
-                        <Link to='/order-not-confirmed' className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/orders-not-confirmed' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             Not Confirmed</Link>
 
-                        <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/food-being-prepared' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             Being Prepared</Link>
 
-                        <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/food-pickup' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             Food Pickup</Link>
 
-                        <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/orders-delivered' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             Delivered</Link>
 
-                        <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/orders-cancelled' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             Cancelled</Link>
 
-                        <Link className='list-group-item list-group-item-action bg-dark text-white border-0'>
+                        <Link to='/all-foods' className='list-group-item list-group-item-action bg-dark text-white border-0'>
                             All orders</Link>
                     </div>
                 )}
 
                 <div className='list-group list-group-flush'>
-                    <Link className='list-group-item list-group-item-action bg-dark text-white'>
+                    <Link to='/order-report' className='list-group-item list-group-item-action bg-dark text-white'>
                         <FaFile className='me-2' />B/w Dates Reports</Link>
                 </div>
 
