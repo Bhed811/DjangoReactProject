@@ -325,7 +325,7 @@ from .serializers import OrderDetailSerializer, OrderedFoodSerializer, FoodTrack
 @api_view(['GET'])
 def view_order_detail(request, order_number):
     try:
-        order_address =OrderAddress.objects.get(order_number=order_number).select_related('user')
+        order_address =OrderAddress.objects.select_related('user').get(order_number=order_number)
         ordered_foods =Order.objects.filter(order_number=order_number).select_related('food')
         tracking =FoodTracking.objects.filter(order__order_number=order_number)
     except:

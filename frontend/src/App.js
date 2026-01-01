@@ -25,6 +25,7 @@ import OrdersDelivered from './pages/OrdersDelivered';
 import OrdersCancelled from './pages/OrdersCancelled';
 import AllFoods from './pages/AllFoods';
 import OrderReport from './pages/OrderReport';
+import ViewFoodOrder from './pages/ViewFoodOrder';
 function App() {
   return (
     <BrowserRouter>
@@ -44,6 +45,8 @@ function App() {
         <Route path="/orders-cancelled" element={<OrdersCancelled />}></Route>
         <Route path="/all-foods" element={<AllFoods />}></Route>
         <Route path="/order-report" element={<OrderReport />}></Route>
+        <Route path="/admin-view-order-detail/:order_number" element={<ViewFoodOrder />}></Route>
+
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>

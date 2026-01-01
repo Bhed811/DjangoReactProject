@@ -82,7 +82,7 @@ class OrderedFoodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Order
-        fields=['item_name', 'item_price', 'image', 'user_mobile']
+        fields=['item_name', 'item_price', 'image']
 
 class FoodTrackingSerializer(serializers.ModelSerializer):
     item_name=serializers.CharField(source='food.item_name')
