@@ -8,6 +8,8 @@ const ViewFoodOrder = () => {
     const adminUser = localStorage.getItem('adminUser');
     const navigate = useNavigate();
     const [data, setData] = useState(null);
+
+
     useEffect(() => {
         if (!adminUser) {
             navigate('/admin-login');
@@ -20,9 +22,20 @@ const ViewFoodOrder = () => {
             })
             .catch(error => console.error(error));
     }, [order_number]);
-    if (!data) return <AdminLayout className="text-center">Loading...</AdminLayout>
+    if (!data) return <AdminLayout><p className="text-center">Loading...</p></AdminLayout>
 
     const { order, foods, tracking } = data;
+    const statusOptions = [
+        'Order Confirmed',
+        'Food being Prepared',
+        'Food Pickup',
+        'Food Delivered',
+        'Order Cancelled'
+    ]
+
+    const currentStatus = order.order_final_status || "";
+
+    const visibleOptions = statusOptions.slice(statusOptions.indexOf(currentStatus) + 1);
     return (
         <AdminLayout>
             <ToastContainer position='top-right' autoClose={2000} />
@@ -47,13 +60,14 @@ const ViewFoodOrder = () => {
                         <h5>Ordered Foods</h5>
                         <table className='table table-bordered'>
                             <thead>
-                                <tr><th>Image</th><th>Food Item</th><th>Price</th></tr>
+                                <tr><th>Image</th><th>Food Item</th><th>Quantity</th><th>Price</th></tr>
                             </thead>
                             <tbody>
                                 {foods.map((food, index) => (
                                     <tr key={index}>
                                         <td><img src={`http://127.0.0.1:8000${food.image}`} width="60" /> </td>
                                         <td>{food.item_name}</td>
+                                        <td>{food.quantity}</td>
                                         <td>{food.item_price}</td>
                                     </tr>
                                 ))}
@@ -71,6 +85,7 @@ const ViewFoodOrder = () => {
                             ) : (
                                 tracking.map((track, index) => (
                                     <tr key={index}>
+                                        <td>{index + 1}</td>
                                         <td>{track.status}</td>
                                         <td>{track.remark}</td>
                                         <td>{new Date(track.status_date).toLocaleString()}</td>
@@ -79,6 +94,56 @@ const ViewFoodOrder = () => {
                             )}
                         </tbody>
                     </table>
+
+                    {order.order_final_status !== 'Food Delivered' && (
+                        <div className='my-4'>
+                            <h5>Update Order Status</h5>
+                            <form onSubmit={(e) => {
+                                e.preventDefault()
+                                const status = e.target.status.value;
+                                const remark = e.target.remark.value;
+                                fetch(`http://127.0.0.1:8000/api/update-order-status/`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        order_number: order.order_number,
+                                        status,
+                                        remark
+                                    })
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.message) {
+                                            toast.success(data.message);
+                                            setTimeout(() => window.location.reload(), 1000)
+                                        } else {
+                                            toast.error(data.error || "Failed to update status");
+                                        }
+                                    })
+                                    .catch(() => {
+                                        toast.error("Server Error");
+                                    });
+                            }}>
+                                <div className='mb-3'>
+                                    <label>Status</label>
+                                    <select name='status' className='form-control' required>
+                                        <option>--Select Status--</option>
+                                        {visibleOptions.map((status, index) => (
+                                            <option key={index} value={status}>{status}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className='mb-3'>
+                                    <label>Remark</label>
+                                    <textarea name='remark' className='form-control' placeholder='Enter the remarks'    ></textarea>
+                                </div>
+                                <div className='text-center'>
+                                    <button type='submit' className='btn btn-success'>Update Status</button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
+
                 </div>
             </div>
         </AdminLayout>

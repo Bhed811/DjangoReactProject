@@ -82,13 +82,9 @@ class OrderedFoodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Order
-        fields=['item_name', 'item_price', 'image']
+        fields=['item_name', 'item_price', 'image', 'quantity']
 
 class FoodTrackingSerializer(serializers.ModelSerializer):
-    item_name=serializers.CharField(source='food.item_name')
-    item_price=serializers.CharField(source='food.item_price')
-    image=serializers.ImageField(source='food.image')
-
     class Meta:
-        model=Order
+        model=FoodTracking
         fields=['remark', 'status', 'status_date', 'order_cancelled_by_user']
