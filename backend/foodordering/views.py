@@ -280,13 +280,13 @@ def orders_confirmed(request):
 
 @api_view(['GET'])
 def food_being_prepared(request):
-    orders =OrderAddress.objects.filter(order_final_status='Food Pickup').order_by('-order_time')
+    orders =OrderAddress.objects.filter(order_final_status='Food being Prepared').order_by('-order_time')
     serializer=OrderSummarySerializer(orders, many=True)
     return Response(serializer.data, status=200)
 
 @api_view(['GET'])
 def food_pickup(request):
-    orders =OrderAddress.objects.filter(order_final_status='Food being Prepared').order_by('-order_time')
+    orders =OrderAddress.objects.filter(order_final_status='Food Pickup').order_by('-order_time')
     serializer=OrderSummarySerializer(orders, many=True)
     return Response(serializer.data, status=200)
 
@@ -354,3 +354,13 @@ def update_order_status(request):
         return Response({"message": "Order Status updated successfully"}, status=200)
     except OrderAddress.DoesNotExist:
         return Response({"error": "Inavlid Order Number"}, status=400)
+    
+@api_view(['GET'])
+def search_orders(request):    
+    query=request.GET.get('q','')
+    try:
+        orders=OrderAddress.objects.filter(order_number__icontains=query).order_by('-order_time')
+        serializer=OrderSummarySerializer(orders, many=True)
+        return Response(serializer.data, status=200)
+    except:
+        return Response({"error": "Something went wrong"}, status=404)

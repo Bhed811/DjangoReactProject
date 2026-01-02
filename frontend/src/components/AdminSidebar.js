@@ -90,7 +90,7 @@ const AdminSidebar = () => {
                 </div>
 
                 <div className='list-group list-group-flush'>
-                    <Link className='list-group-item list-group-item-action bg-dark text-white'>
+                    <Link to='/search-order' className='list-group-item list-group-item-action bg-dark text-white'>
                         <FaSearch className='me-2' />Search</Link>
                 </div>
 
