@@ -383,3 +383,22 @@ def category_detail(request,id):
     elif request.method == 'DELETE':
         category.delete()
         return Response({"message": "Category deleted successfully"}, status=200)
+    
+@api_view(['GET','PUT','DELETE'])
+def edit_food(request,id):   
+    try: 
+        food=Food.objects.get(id=id)
+    except:
+        return Response({"error": "Food item not found"}, status=404)
+    if request.method == 'GET':
+        serializer=FoodSerializer(food)
+        return Response(serializer.data, status=200)
+    elif request.method == 'PUT':
+        serializer=FoodSerializer(food,data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Food item successfully"}, status=200)
+        return Response(serializer.errors, status=400)
+    elif request.method == 'DELETE':
+        food.delete()
+        return Response({"message": "Food item deleted successfully"}, status=200)

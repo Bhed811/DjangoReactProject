@@ -28,6 +28,7 @@ import OrderReport from './pages/OrderReport';
 import ViewFoodOrder from './pages/ViewFoodOrder';
 import SearchOrder from './pages/SearchOrder';
 import EditCategory from './pages/EditCategory';
+import EditFood from './pages/EditFood';
 function App() {
   return (
     <BrowserRouter>
@@ -50,6 +51,7 @@ function App() {
         <Route path="/admin-view-order-detail/:order_number" element={<ViewFoodOrder />}></Route>
         <Route path="/search-order" element={<SearchOrder />}></Route>
         <Route path="/edit-category/:id" element={<EditCategory />}></Route>
+        <Route path="/edit-food/:id" element={<EditFood />}></Route>
 
 
         <Route path="/search" element={<SearchPage />}></Route>
