@@ -364,3 +364,22 @@ def search_orders(request):
         return Response(serializer.data, status=200)
     except:
         return Response({"error": "Something went wrong"}, status=404)
+    
+@api_view(['GET','PUT','DELETE'])
+def category_detail(request,id):   
+    try: 
+        category=Category.objects.get(id=id)
+    except:
+        return Response({"error": "Category not found"}, status=404)
+    if request.method == 'GET':
+        serializer=CategorySerializer(category)
+        return Response(serializer.data, status=200)
+    elif request.method == 'PUT':
+        serializer=CategorySerializer(category,data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Category updated successfully"}, status=200)
+        return Response(serializer.errors, status=400)
+    elif request.method == 'DELETE':
+        category.delete()
+        return Response({"message": "Category deleted successfully"}, status=200)

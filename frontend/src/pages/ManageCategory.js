@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AdminLayout from '../components/AdminLayout'
 import { Link } from 'react-router-dom'
 import { CSVLink } from 'react-csv'
+import { ToastContainer, toast } from 'react-toastify'
 
 const ManageCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -25,8 +26,31 @@ const ManageCategory = () => {
     setCategories(filtered);
   };
 
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this category?')) return;
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/category/${id}/`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        toast.success(data.message);
+        setCategories(prev => prev.filter(category => category.id !== id));
+        setAllCategories(prev => prev.filter(category => category.id !== id));
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Server error");
+    }
+  };
   return (
     <AdminLayout>
+      <ToastContainer position='top-right' autoClose={2000} />
       <div>
         <h3 className='text-center text-primary mb-4'>
           {/* <i className='fas fa-list-alt me-1'></i> */}
@@ -59,10 +83,10 @@ const ManageCategory = () => {
                 <td className='text-center'>{category.category_name}</td>
                 <td className='text-center'>{new Date(category.creation_date).toLocaleString()}</td>
                 <td className='text-center' >
-                  <Link className='btn btn-sm btn-primary'>
+                  <Link to={`/edit-category/${category.id}`} className='btn btn-sm btn-primary'>
                     <i className='fas fa-edit me-1'></i> Edit
                   </Link>
-                  <button className='btn btn-sm btn-danger ms-2 '>
+                  <button onClick={() => handleDelete(category.id)} className='btn btn-sm btn-danger ms-2 '>
                     <i className='fas fa-trash me-1'></i> Delete
                   </button>
                 </td>
