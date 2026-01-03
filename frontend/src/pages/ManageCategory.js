@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '../components/AdminLayout'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CSVLink } from 'react-csv'
 import { ToastContainer, toast } from 'react-toastify'
 
 const ManageCategory = () => {
+  const adminUser = localStorage.getItem('adminUser');
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (!adminUser) {
+      navigate('/admin-login');
+      return;
+    }
     fetch('http://127.0.0.1:8000/api/categories/')
       .then(response => response.json())
       .then(data => {
