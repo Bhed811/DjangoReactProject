@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '../components/AdminLayout';
 import { useNavigate } from 'react-router-dom'
-
+import '../styles/adminDashboard.css'
 const AdminDashboard = () => {
     const adminUser = localStorage.getItem('adminUser');
     const [metrics, setMetrics] = useState({
@@ -18,8 +18,8 @@ const AdminDashboard = () => {
         week_sales: 0,
         month_sales: 0,
         year_sales: 0,
-        today_reviews: 0,
-        today_wishlists: 0
+        total_reviews: 0,
+        total_wishlists: 0
     });
     const navigate = useNavigate();
 
@@ -38,21 +38,21 @@ const AdminDashboard = () => {
 
     const cardDate = [
         { title: 'Total Orders', key: 'total_orders', color: 'primary', icon: 'fas fa-shopping-cart' },
-        { title: 'New Orders', key: 'new_orders', color: 'danger', icon: 'fas fa-cart-plus' },
-        { title: 'Confirmed Orders', key: 'confirmed_orders', color: 'success', icon: 'fas fa-check-circle' },
-        { title: 'Food Preparing', key: 'food_preparing', color: 'warning', icon: 'fas fa-utensils' },
-        { title: 'Food Picked Up', key: 'food_picked_up', color: 'warning', icon: 'fas fa-motorcycle' },
-        { title: 'Food Delivered', key: 'food_delivered', color: 'success', icon: 'fas fa-motorcycle' },
-        { title: 'Cancelled Orders', key: 'cancelled_orders', color: 'danger', icon: 'fas fa-times-circle' },
         { title: 'Total Users', key: 'total_users', color: 'warning', icon: 'fas fa-users' },
         { title: 'Total Categories', key: 'total_categories', color: 'danger', icon: 'fas fa-list' },
-        { title: 'Today Sales', key: 'today_sales', color: 'info', icon: 'fas fa-dollar-sign' },
-        { title: 'Week Sales', key: 'week_sales', color: 'info', icon: 'fas fa-dollar-sign' },
-        { title: 'Month Sales', key: 'month_sales', color: 'info', icon: 'fas fa-dollar-sign' },
-        { title: 'Year Sales', key: 'year_sales', color: 'info', icon: 'fas fa-dollar-sign' },
-        { title: 'Today Reviews', key: 'today_reviews', color: 'info', icon: 'fas fa-star' },
-        { title: 'Today Wishlists', key: 'today_wishlists', color: 'info', icon: 'fas fa-heart' },
-        { title: 'Total Foods', key: 'total_foods', color: 'warning', icon: 'fas fa-utensils' },
+        { title: 'Total Foods', key: 'total_foods', color: 'success', icon: 'fas fa-utensils' },
+        { title: 'New Orders', key: 'new_orders', color: 'warning', icon: 'fas fa-cart-plus' },
+        { title: 'Confirmed Orders', key: 'confirmed_orders', color: 'danger', icon: 'fas fa-check-circle' },
+        { title: 'Food Preparing', key: 'food_preparing', color: 'success', icon: 'fas fa-utensils' },
+        { title: 'Food Picked Up', key: 'food_picked_up', color: 'primary', icon: 'fas fa-motorcycle' },
+        { title: 'Food Delivered', key: 'food_delivered', color: 'danger', icon: 'fas fa-motorcycle' },
+        { title: 'Cancelled Orders', key: 'cancelled_orders', color: 'success', icon: 'fas fa-times-circle' },
+        { title: 'Total Reviews', key: 'total_reviews', color: 'primary', icon: 'fas fa-star' },
+        { title: 'Total Wishlists', key: 'total_wishlists', color: 'warning', icon: 'fas fa-heart' },
+        { title: 'Today Sales', key: 'today_sales', color: 'success', icon: 'fas fa-dollar-sign' },
+        { title: 'Week Sales', key: 'week_sales', color: 'primary', icon: 'fas fa-dollar-sign' },
+        { title: 'Month Sales', key: 'month_sales', color: 'warning', icon: 'fas fa-dollar-sign' },
+        { title: 'Year Sales', key: 'year_sales', color: 'danger', icon: 'fas fa-dollar-sign' },
     ]
 
     return (
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
             <div className='row g-3'>
                 {cardDate.map((card, index) => (
                     <div className='col-md-3' key={index}>
-                        <div className={`card text-white bg-${card.color}`}>
+                        <div className={`card card-hover text-white bg-${card.color}`}>
                             <div className='card-body d-flex justify-content-between align-items-center'>
                                 <div>
                                     <h5 className='card-title'>{card.title}</h5>

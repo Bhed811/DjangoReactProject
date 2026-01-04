@@ -431,6 +431,16 @@ def dashboard_metrics(request):
     data={
         'total_orders': OrderAddress.objects.count(),
         'new_orders': OrderAddress.objects.filter(order_final_status__isnull=True).count(),
+        'confirmed_orders': OrderAddress.objects.filter(order_final_status='confirmed').count(),
+        'cancelled_orders': OrderAddress.objects.filter(order_final_status='Order Cancelled').count(),
+        'food_delivered': OrderAddress.objects.filter(order_final_status='Food Delivered').count(),
+        'food_preparing': OrderAddress.objects.filter(order_final_status='Food being Prepared').count(),
+        'food_picked_up': OrderAddress.objects.filter(order_final_status='Food Pickup').count(),
+        'total_categories': Category.objects.count(),
+        'total_users': User.objects.count(),
+        'total_foods': Food.objects.count(),
+        'total_reviews': Review.objects.count(),
+        'total_wishlists': Wishlist.objects.count(),
         
     }
     return Response(data, status=200)
