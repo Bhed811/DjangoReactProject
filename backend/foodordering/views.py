@@ -414,7 +414,7 @@ def edit_food(request,id):
 def list_users(request):    
     users=User.objects.all().order_by('-id')
     serializer=UserSerializer(users, many=True)
-    return Response(serializer.data, status=200)\
+    return Response(serializer.data, status=200)
 
 
 @api_view(['DELETE'])
@@ -425,3 +425,12 @@ def delete_user(request,id):
         return Response({"message": "User deleted successfully"}, status=200)
     except:
         return Response({"message": "Something went wrong"}, status=404)
+    
+@api_view(['GET'])
+def dashboard_metrics(request):    
+    data={
+        'total_orders': OrderAddress.objects.count(),
+        'new_orders': OrderAddress.objects.filter(order_final_status__isnull=True).count(),
+        
+    }
+    return Response(data, status=200)

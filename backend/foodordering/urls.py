@@ -38,4 +38,5 @@ urlpatterns = [
     path('edit-food/<int:id>/', edit_food),
     path('users/', list_users),
     path('delete_user/<int:id>/', delete_user),
+    path('dashboard-metrics/', dashboard_metrics),
 ]
