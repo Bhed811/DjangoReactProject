@@ -383,9 +383,11 @@ def category_detail(request,id):
     elif request.method == 'DELETE':
         category.delete()
         return Response({"message": "Category deleted successfully"}, status=200)
-    
+
+
+@parser_classes([MultiPartParser, FormParser])
 @api_view(['GET','PUT','DELETE'])
-def edit_food(request,id):   
+def edit_food(request,id):      
     try: 
         food=Food.objects.get(id=id)
     except:
@@ -394,7 +396,12 @@ def edit_food(request,id):
         serializer=FoodSerializer(food)
         return Response(serializer.data, status=200)
     elif request.method == 'PUT':
-        serializer=FoodSerializer(food,data=request.data, partial=True)
+        data=request.data.copy()
+        if 'image' not in request.FILES:    
+            data['image'] = food.image
+        if 'is_available' in data:
+            data['is_available'] = data['is_available'].lower() == 'true'
+        serializer=FoodSerializer(food,data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Food item successfully"}, status=200)
