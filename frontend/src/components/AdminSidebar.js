@@ -25,7 +25,7 @@ const AdminSidebar = () => {
                     <FaThLarge className='me-2 ' />Dashboard</Link>
 
                 <div className='list-group list-group-flush'>
-                    <Link className='list-group-item list-group-item-action bg-dark text-white'>
+                    <Link to='/manage-users' className='list-group-item list-group-item-action bg-dark text-white'>
                         <FaUsers className='me-2 ' />Reg Users</Link>
                 </div>
 

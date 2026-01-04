@@ -409,3 +409,19 @@ def edit_food(request,id):
     elif request.method == 'DELETE':
         food.delete()
         return Response({"message": "Food item deleted successfully"}, status=200)
+
+@api_view(['GET'])
+def list_users(request):    
+    users=User.objects.all().order_by('-id')
+    serializer=UserSerializer(users, many=True)
+    return Response(serializer.data, status=200)\
+
+
+@api_view(['DELETE'])
+def delete_user(request,id):
+    try:
+        user = User.objects.get(id=id)
+        user.delete()
+        return Response({"message": "User deleted successfully"}, status=200)
+    except:
+        return Response({"message": "Something went wrong"}, status=404)
