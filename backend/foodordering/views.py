@@ -427,7 +427,7 @@ def delete_user(request,id):
         return Response({"message": "Something went wrong"}, status=404)
     
 
-from django.utils.timezone import now, timedelta, make_aware    
+from django.utils.timezone import now, timedelta, make_aware, DecimalField
 from django.db.models import Sum, F   
 from datetime import datetime
 @api_view(['GET'])
@@ -465,3 +465,35 @@ def dashboard_metrics(request):
     }
     return Response(data, status=200)
 
+from decimal import Decimal
+from collections import defaultdict
+from django.db.models import Sum, F, DecimalField
+from django.db.models.functions import TruncMonth, Coalesce
+
+@api_view(['GET'])
+def monthly_sales_summary(request): 
+    orders= (Order.objects
+             .filter(is_order_placed=True)
+             .values('order_number')
+             .annotate(total_price=Coalesce(Sum(F('quantity') * F('food__item_price'), 
+                                       output_field=DecimalField(max_digits=12, decimal_places=2)),Decimal('0.00')))
+    )
+    order_price_map={
+        o['order_number']: o['total_price'] for o in orders
+    }
+    addresses=(
+        OrderAddress.objects
+        .filter(order_number__in=order_price_map.keys())
+        .annotate(month=TruncMonth('order_time'))
+        .values('month','order_number')
+    )
+    month_totals=defaultdict(lambda: Decimal('0.00'))
+    for address in addresses:
+        label=address['month'].strftime('%b')
+        month_totals[label]+=order_price_map.get(address['order_number'], Decimal('0.00'))
+    data={
+        'month_totals': month_totals
+    }
+    result=[{'month': m, 'sales': total} for m, total in month_totals.items()]
+    
+    return Response(data, status=200)
