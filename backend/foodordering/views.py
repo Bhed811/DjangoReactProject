@@ -427,7 +427,7 @@ def delete_user(request,id):
         return Response({"message": "Something went wrong"}, status=404)
     
 
-from django.utils.timezone import now, timedelta, make_aware, DecimalField
+from django.utils.timezone import now, timedelta, make_aware
 from django.db.models import Sum, F   
 from datetime import datetime
 @api_view(['GET'])
@@ -496,4 +496,4 @@ def monthly_sales_summary(request):
     }
     result=[{'month': m, 'sales': total} for m, total in month_totals.items()]
     
-    return Response(data, status=200)
+    return Response(result)
