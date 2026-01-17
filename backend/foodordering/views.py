@@ -426,8 +426,24 @@ def delete_user(request,id):
     except:
         return Response({"message": "Something went wrong"}, status=404)
     
+
+from django.utils.timezone import now, timedelta, make_aware    
+from django.db.models import Sum, F   
+from datetime import datetime
 @api_view(['GET'])
-def dashboard_metrics(request):    
+def dashboard_metrics(request): 
+    today = now().date()
+    start_week= today - timedelta(days=today.weekday())
+    start_month = today.replace(day=1)
+    start_year = today.replace(month=1, day=1)
+    def get_sales_total(start_date):
+        aware_start=make_aware(datetime.combine(start_date,datetime.min.time()))
+        paid_orders=PaymentDetail.objects.filter(payment_date__gte=start_date).values_list('order_number', flat=True)
+        total= Order.objects.filter(order_number__in=paid_orders).annotate(
+            total_price=F('quantity') * F('food__item_price')
+        ).aggregate(sale_amount=Sum('total_price'))['sale_amount'] or 0
+        return total
+        
     data={
         'total_orders': OrderAddress.objects.count(),
         'new_orders': OrderAddress.objects.filter(order_final_status__isnull=True).count(),
@@ -441,6 +457,11 @@ def dashboard_metrics(request):
         'total_foods': Food.objects.count(),
         'total_reviews': Review.objects.count(),
         'total_wishlists': Wishlist.objects.count(),
+        'today_sales': get_sales_total(start_date=today),
+        'week_sales': get_sales_total(start_date=start_week),
+        'month_sales': get_sales_total(start_date=start_month),
+        'year_sales': get_sales_total(start_date=start_year)
         
     }
     return Response(data, status=200)
+
