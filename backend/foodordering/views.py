@@ -497,3 +497,16 @@ def monthly_sales_summary(request):
     result=[{'month': m, 'sales': total} for m, total in month_totals.items()]
     
     return Response(result)
+
+@api_view(['GET'])
+def top_selling_foods(request): 
+    top_foods= (Order.objects
+             .filter(is_order_placed=True)
+             .values('food__item_name')
+             .annotate(total_sold=Sum('quantity'))
+             .order_by('-total_sold')[:5]
+             
+    )
+ 
+    
+    return Response(top_foods)
