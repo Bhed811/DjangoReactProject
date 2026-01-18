@@ -5,6 +5,7 @@ import WeeklySalesChart from '../components/WeeklySalesChart';
 import TopProducts from '../components/TopProducts';
 import { useNavigate } from 'react-router-dom'
 import '../styles/adminDashboard.css'
+import WeeklyUsersChart from '../components/WeeklyUsersChart';
 const AdminDashboard = () => {
     const adminUser = localStorage.getItem('adminUser');
     const [metrics, setMetrics] = useState({
@@ -85,6 +86,9 @@ const AdminDashboard = () => {
                 </div>
                 <div className='col-md-6'>
                     <WeeklySalesChart />
+                </div>
+                <div className='col-md-6'>
+                    <WeeklyUsersChart />
                 </div>
             </div>
         </AdminLayout>

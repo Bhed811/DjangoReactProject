@@ -529,11 +529,27 @@ def weekly_sales_summary(request):
     )
     weekly_totals=defaultdict(lambda: Decimal('0.00'))
     for address in addresses:
-        label=address['week'].strftime('Week %W" %y')
+        label=address['week'].strftime("Week %W '%y")
         weekly_totals[label]+=order_price_map.get(address['order_number'], Decimal('0.00'))
     data={
         'weekly_totals': weekly_totals
     }
     result=[{'week': w, 'sales': total} for w, total in weekly_totals.items()]
+    
+    return Response(result)
+
+from django.db.models import Count
+@api_view(['GET'])
+def weekly_users_registrations(request): 
+    
+    data=(
+        User.objects
+        .annotate(week=TruncWeek('reg_date'))
+        .values('week')
+        .annotate(new_users=Count('id'))
+        .order_by('week')
+    )
+    
+    result=[{'week': entry['week'].strftime("Week %W '%y"), 'new_users':entry['new_users'] } for entry in data]
     
     return Response(result)
