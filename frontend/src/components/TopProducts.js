@@ -12,7 +12,7 @@ const TopProducts = () => {
             .catch(error => console.error(error));
     }, []);
     return (
-        <div className='card shadow'>
+        <div className='card shadow h-100'>
             <div className='card-header bg-success text-white'>
                 <i className='fas fa-star me-2'></i>Top 5 Selling Foods
             </div>

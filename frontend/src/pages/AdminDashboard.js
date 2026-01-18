@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '../components/AdminLayout';
 import SalesBarChart from '../components/SalesBarChart';
+import WeeklySalesChart from '../components/WeeklySalesChart';
 import TopProducts from '../components/TopProducts';
 import { useNavigate } from 'react-router-dom'
 import '../styles/adminDashboard.css'
@@ -81,6 +82,9 @@ const AdminDashboard = () => {
                 </div>
                 <div className='col-md-6'>
                     <TopProducts />
+                </div>
+                <div className='col-md-6'>
+                    <WeeklySalesChart />
                 </div>
             </div>
         </AdminLayout>
