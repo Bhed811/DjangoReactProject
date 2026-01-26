@@ -3,6 +3,7 @@ import PublicLayout from '../components/PublicLayout'
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FaMinus, FaPlus, FaShoppingCart, FaTrash } from 'react-icons/fa';
+import { useCart } from '../context/CartContext';
 
 const Cart = () => {
 
@@ -10,6 +11,7 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [grandTotal, setGrandTotal] = useState(0);
     const navigate = useNavigate();
+    const { setCartCount } = useCart();
 
     useEffect(() => {
 
@@ -48,6 +50,7 @@ const Cart = () => {
                 setCartItems(data);
                 const total = data.reduce((sum, item) => sum + item.food.item_price * item.quantity, 0);
                 setGrandTotal(total);
+                setCartCount(data.length);
 
             }
             else {
@@ -79,6 +82,8 @@ const Cart = () => {
                 setCartItems(data);
                 const total = data.reduce((sum, item) => sum + item.food.item_price * item.quantity, 0);
                 setGrandTotal(total);
+                setCartCount(data.length);
+
 
             }
             else {

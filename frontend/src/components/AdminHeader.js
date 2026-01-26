@@ -23,7 +23,14 @@ const AdminHeader = ({ toggleSidebar, sidebarOpen, newOrders }) => {
       <div className='collapse navbar-collapse'>
         <ul className='navbar-nav ms-auto align-items-center gap-3'>
           <li className='nav-item'>
-            <button className='btn btn-outline-secondary'>
+            <button className='btn btn-outline-secondary'
+              onClick={() => {
+                if (newOrders > 0) {
+                  navigate('/orders-not-confirmed')
+                }
+              }}
+              title={newOrders > 0 ? 'View New Orders' : 'View Orders'}
+            >
               <FaBell />
               <span className='position-absolute  badge rounded-pill bg-danger'>{newOrders}</span>
             </button>

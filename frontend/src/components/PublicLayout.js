@@ -2,19 +2,30 @@ import React, { useState, useEffect } from 'react'
 import { FaCogs, FaHeart, FaHome, FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaTruck, FaUser, FaUserCircle, FaUserPlus, FaUserShield, FaUtensils } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import '../styles/layout.css';
+import { useCart } from '../context/CartContext';
 const PublicLayout = ({ children }) => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
+  const { cartCount, setCartCount } = useCart();
 
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
   const name = localStorage.getItem('userName');
 
+  const fetchCartCount = async () => {
+    if (userId) {
+      const res = await fetch(`http://127.0.0.1:8000/api/cart/${userId}`);
+      const data = await res.json();
+      setCartCount(data.length);
+    }
+  }
+
   useEffect(() => {
     if (userId) {
       setIsLoggedIn(true);
       setUserName(name);
+      fetchCartCount();
     } else {
       setIsLoggedIn(false);
       setUserName('');
@@ -25,6 +36,7 @@ const PublicLayout = ({ children }) => {
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
     setIsLoggedIn(false);
+    setCartCount(0);
     navigate('/login');
   }
 
@@ -63,7 +75,8 @@ const PublicLayout = ({ children }) => {
                   <Link className="nav-link" to="/my-orders"><FaUser className='me-1 ' />My Orders</Link>
                 </li>
                 <li className="nav-item mx-1">
-                  <Link className="nav-link" to="/cart"><FaShoppingCart className='me-1 ' />Cart</Link>
+                  <Link className="nav-link" to="/cart"><FaShoppingCart className='me-1 ' />Cart
+                    {cartCount > 0 && <span>({cartCount})</span>}</Link>
                 </li>
                 <li className="nav-item mx-1">
                   <Link className="nav-link" to=""><FaHeart className='me-1 ' />Wishlist</Link>

@@ -30,44 +30,47 @@ import SearchOrder from './pages/SearchOrder';
 import EditCategory from './pages/EditCategory';
 import EditFood from './pages/EditFood';
 import ManageUser from './pages/ManageUser';
+import { CartProvider } from './context/CartContext';
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/admin-login" element={<AdminLogin />}></Route>
-        <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
-        <Route path="/add-category" element={<AddCategory />}></Route>
-        <Route path="/manage-category" element={<ManageCategory />}></Route>
-        <Route path="/add-food" element={<AddFood />}></Route>
-        <Route path="/manage-food" element={<ManageFood />}></Route>
-        <Route path="/orders-confirmed" element={<OrdersConfirmed />}></Route>
-        <Route path="/orders-not-confirmed" element={<OrdersNotConfirmed />}></Route>
-        <Route path="/food-being-prepared" element={<FoodBeingPrepared />}></Route>
-        <Route path="/food-pickup" element={<FoodPickup />}></Route>
-        <Route path="/orders-delivered" element={<OrdersDelivered />}></Route>
-        <Route path="/orders-cancelled" element={<OrdersCancelled />}></Route>
-        <Route path="/all-foods" element={<AllFoods />}></Route>
-        <Route path="/order-report" element={<OrderReport />}></Route>
-        <Route path="/admin-view-order-detail/:order_number" element={<ViewFoodOrder />}></Route>
-        <Route path="/search-order" element={<SearchOrder />}></Route>
-        <Route path="/edit-category/:id" element={<EditCategory />}></Route>
-        <Route path="/edit-food/:id" element={<EditFood />}></Route>
-        <Route path="/manage-users" element={<ManageUser />}></Route>
+    <CartProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/admin-login" element={<AdminLogin />}></Route>
+          <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
+          <Route path="/add-category" element={<AddCategory />}></Route>
+          <Route path="/manage-category" element={<ManageCategory />}></Route>
+          <Route path="/add-food" element={<AddFood />}></Route>
+          <Route path="/manage-food" element={<ManageFood />}></Route>
+          <Route path="/orders-confirmed" element={<OrdersConfirmed />}></Route>
+          <Route path="/orders-not-confirmed" element={<OrdersNotConfirmed />}></Route>
+          <Route path="/food-being-prepared" element={<FoodBeingPrepared />}></Route>
+          <Route path="/food-pickup" element={<FoodPickup />}></Route>
+          <Route path="/orders-delivered" element={<OrdersDelivered />}></Route>
+          <Route path="/orders-cancelled" element={<OrdersCancelled />}></Route>
+          <Route path="/all-foods" element={<AllFoods />}></Route>
+          <Route path="/order-report" element={<OrderReport />}></Route>
+          <Route path="/admin-view-order-detail/:order_number" element={<ViewFoodOrder />}></Route>
+          <Route path="/search-order" element={<SearchOrder />}></Route>
+          <Route path="/edit-category/:id" element={<EditCategory />}></Route>
+          <Route path="/edit-food/:id" element={<EditFood />}></Route>
+          <Route path="/manage-users" element={<ManageUser />}></Route>
 
 
-        <Route path="/search" element={<SearchPage />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/food/:id" element={<FoodDetail />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/payment" element={<PaymentPage />}></Route>
-        <Route path="/my-orders" element={<MyOrders />}></Route>
-        <Route path="/order-details/:order_number" element={<OrderDetails />}></Route>
-        <Route path="/profile" element={<ProfilePage />}></Route>
-        <Route path="/changepassword" element={<ChangePassword />}></Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="/search" element={<SearchPage />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/food/:id" element={<FoodDetail />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/payment" element={<PaymentPage />}></Route>
+          <Route path="/my-orders" element={<MyOrders />}></Route>
+          <Route path="/order-details/:order_number" element={<OrderDetails />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
+          <Route path="/changepassword" element={<ChangePassword />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 
